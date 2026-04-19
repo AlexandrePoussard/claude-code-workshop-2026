@@ -12,8 +12,6 @@ python3 -m http.server 8000
 # then visit http://localhost:8000
 ```
 
-**Default password:** `zurich-2026`
-
 ## Editing content
 
 - **Step content** lives in `content/steps.js`. Each entry has a `bodyHTML`
