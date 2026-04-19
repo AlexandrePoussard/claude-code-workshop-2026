@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>Claude Code Workshop · Zurich</title>
+  <link rel="stylesheet" href="styles.css?v=6" />
+</head>
+<body>
+  <!-- Password gate -->
+  <div id="gate" class="gate">
+    <form id="gate-form" class="gate-card" autocomplete="off">
+      <h1 class="gate-title"><span class="accent">Claude Code</span> Workshop</h1>
+      <p class="gate-subtitle">Enter the workshop password to continue.</p>
+      <input
+        id="gate-input"
+        class="gate-input"
+        type="password"
+        placeholder="Password"
+        autofocus
+        required
+      />
+      <button id="gate-submit" class="gate-button" type="submit">Unlock</button>
+      <p id="gate-error" class="gate-error" hidden>Incorrect password.</p>
+    </form>
+  </div>
+
+  <!-- Main app (hidden until unlocked) -->
+  <div id="app" class="app" hidden>
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-mark" aria-hidden="true"></div>
+        <div class="brand-text">
+          <div class="brand-title">Claude Code</div>
+          <div class="brand-subtitle">WORKSHOP</div>
+        </div>
+      </div>
+      <div class="sidebar-tag">zurich-2026</div>
+      <nav class="sidebar-nav">
+        <a class="sidebar-link sidebar-link--active" href="#workshop">Workshop</a>
+      </nav>
+      <button id="lock-button" class="sidebar-lock" type="button" title="Lock">Lock</button>
+    </aside>
+
+    <main class="main">
+      <header class="main-header">
+        <h1>Workshop Guide</h1>
+        <p class="lead">A step-by-step Claude Code guide using a full-stack inventory management application.</p>
+      </header>
+
+      <section class="callout">
+        <h2 class="callout-title">Prerequisites</h2>
+        <ul>
+          <li>Claude Code installed and set up (<a href="https://docs.anthropic.com" target="_blank" rel="noopener">docs.anthropic.com</a>)</li>
+          <li>Open up Terminal/Windows Powershell OR code editor (VS Code recommended)</li>
+        </ul>
+        <div class="callout-inner">
+          <p><strong>Pro Tip:</strong> Claude Code will ask for permission when it needs to:</p>
+          <ul>
+            <li><strong>Configs &amp; Permission:</strong> supports fine-grained permissions to scope agents</li>
+            <li>Modify files in your project</li>
+            <li>Run bash commands</li>
+            <li>Install new tools (like the Playwright MCP in Step 9)</li>
+          </ul>
+          <p>Press <kbd>Enter</kbd> when prompted to approve each action, or tell Claude what to do instead.</p>
+          <p>This keeps you in control of what happens in your codebase.</p>
+        </div>
+      </section>
+
+      <section class="welcome">
+        <strong>Welcome to the workshop!</strong>
+        Expand each step and work through the instructions at your own pace.
+      </section>
+
+      <details class="accordion accordion--muted">
+        <summary>
+          <span class="summary-icon" aria-hidden="true">!</span>
+          <span class="summary-title">Troubleshooting &amp; Keyboard Shortcuts</span>
+        </summary>
+        <div class="accordion-body">
+          <h3>Troubleshooting</h3>
+          <dl class="kv">
+            <dt>Something broke and you're stuck</dt><dd>Copy the full error message and paste it into Claude Code</dd>
+            <dt>Claude can't see what's on screen</dt><dd>Take a screenshot and paste it (Ctrl+V / Cmd+V)</dd>
+            <dt>Claude's response doesn't work</dt><dd>Iterate: describe what went wrong and what you expected</dd>
+            <dt>Claude is struggling with complexity</dt><dd>Try <code>think harder</code> or <code>ultrathink</code> to trigger extended thinking</dd>
+            <dt>Need to see the full conversation</dt><dd>Press <kbd>Ctrl+O</kbd> to open the transcript viewer</dd>
+            <dt>Servers won't start</dt><dd>Run <code>/start</code> or manually kill ports: <code>lsof -ti:3000,8001 | xargs kill</code></dd>
+          </dl>
+
+          <h3>Keyboard Shortcuts</h3>
+          <dl class="kv">
+            <dt><kbd>Enter</kbd></dt><dd>Approve a tool action</dd>
+            <dt><kbd>Escape</kbd></dt><dd>Deny / cancel</dd>
+            <dt><kbd>Shift+Tab</kbd></dt><dd>Toggle Plan Mode</dd>
+            <dt><kbd>!</kbd></dt><dd>Enter Bash mode (run shell commands)</dd>
+            <dt><kbd>#</kbd></dt><dd>Enter Memory mode</dd>
+            <dt><kbd>@</kbd></dt><dd>Reference a file</dd>
+            <dt><kbd>Ctrl+O</kbd></dt><dd>Open transcript viewer</dd>
+            <dt><kbd>Ctrl+C</kbd></dt><dd>Interrupt Claude</dd>
+          </dl>
+
+          <h3>Resources</h3>
+          <ul>
+            <li><a href="https://docs.anthropic.com/en/docs/claude-code/overview" target="_blank" rel="noopener">Claude Code Documentation</a></li>
+            <li><a href="https://www.anthropic.com/claude-code" target="_blank" rel="noopener">Claude Code Best Practices</a></li>
+          </ul>
+        </div>
+      </details>
+
+      <h2 class="section-title">Core Steps</h2>
+      <div id="steps-container" class="steps"></div>
+
+      <footer class="footer">
+        <span>Artefact · Claude Code Workshop · Zurich</span>
+      </footer>
+    </main>
+  </div>
+
+  <script src="content/steps.js?v=6"></script>
+  <script src="app.js?v=6"></script>
+</body>
+</html>
