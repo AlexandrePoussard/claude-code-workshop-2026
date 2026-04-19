@@ -179,22 +179,8 @@ window.WORKSHOP_STEPS = [
     bodyHTML: `<p><em>Content coming soon.</em></p>`,
   },
   {
-    id: "github-integration",
-    number: 10,
-    title: "Connect Claude Code to GitHub",
-    subtitle: "Wire up the GitHub App / gh CLI for PR automation.",
-    bodyHTML: `<p><em>Content coming soon.</em></p>`,
-  },
-  {
-    id: "commit-pr",
-    number: 11,
-    title: "Commit, Push & Open a PR",
-    subtitle: "Ship your changes back upstream.",
-    bodyHTML: `<p><em>Content coming soon.</em></p>`,
-  },
-  {
     id: "wrap-up",
-    number: 12,
+    number: 10,
     title: "Wrap Up",
     subtitle: "Reflect, share feedback, and next steps.",
     bodyHTML: `<p><em>Content coming soon.</em></p>`,
