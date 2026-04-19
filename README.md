@@ -21,41 +21,6 @@ python3 -m http.server 8000
 - **Prerequisites / troubleshooting** are inline in `index.html`.
 - **Theme colors** live in the `:root` block at the top of `styles.css`.
 
-## Changing the password
-
-The gate compares a SHA-256 hash. To change the password:
-
-1. Open the deployed site (or local preview) and unlock once.
-2. In the browser devtools console run:
-
-   ```js
-   await hashPassword("your-new-password")
-   ```
-
-3. Copy the returned hex string.
-4. Replace `PASSWORD_SHA256` in `app.js` with the new hash.
-5. Commit and redeploy.
-
-Alternatively from a terminal:
-
-```bash
-echo -n "your-new-password" | shasum -a 256
-```
-
-> **Note:** this gate is for casual friction only. Anyone with devtools can
-> read the hash and brute-force a weak password. Use a non-trivial password.
-
-## Deploy to GitHub Pages
-
-1. Push this folder to a GitHub repo (e.g. `artefact-claude-code-zurich`).
-2. In the repo: **Settings → Pages**.
-3. Under *Source* choose **Deploy from a branch**, pick `main` and folder `/`
-   (or `/docs` if you prefer — move files accordingly).
-4. Save. Within ~1 minute the site is live at
-   `https://<username>.github.io/<repo>/`.
-
-No CI needed — GitHub Pages serves the files as-is.
-
 ## File structure
 
 ```
