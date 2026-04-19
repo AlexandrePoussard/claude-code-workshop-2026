@@ -78,7 +78,7 @@ pre {
   font-size: 0.9em;
   background: #0b0b0b;
   color: #f4f4f2;
-  padding: 14px 16px;
+  padding: 14px 48px 14px 16px;
   border-radius: var(--radius-sm);
   overflow-x: auto;
   margin: 12px 0;
@@ -88,6 +88,52 @@ pre code {
   background: transparent;
   padding: 0;
   color: inherit;
+}
+
+.code-block {
+  position: relative;
+}
+.code-block pre { margin: 12px 0; }
+
+.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.06);
+  color: #d6d6d2;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.1s;
+  padding: 0;
+  font-family: inherit;
+}
+
+.copy-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.copy-btn:active { transform: scale(0.96); }
+
+.copy-btn--ok {
+  background: rgba(100, 180, 120, 0.2);
+  border-color: rgba(100, 180, 120, 0.4);
+  color: #a6e6b4;
+}
+
+.copy-btn--ok svg { display: none; }
+.copy-btn--ok::after {
+  content: "✓";
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 700;
 }
 
 /* ============================================================
@@ -271,8 +317,8 @@ pre code {
 
 .main {
   padding: 40px 48px 80px;
-  max-width: 960px;
   width: 100%;
+  min-width: 0;
 }
 
 .main-header { margin-bottom: 24px; }
@@ -346,7 +392,7 @@ pre code {
    Accordions (native <details>)
    ============================================================ */
 
-.steps { display: flex; flex-direction: column; gap: 10px; }
+.steps { display: flex; flex-direction: column; gap: 12px; }
 
 .accordion {
   background: var(--bg-card);
@@ -363,10 +409,10 @@ pre code {
 .accordion summary {
   list-style: none;
   cursor: pointer;
-  padding: 16px 20px;
+  padding: 20px 24px;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 18px;
   user-select: none;
 }
 
@@ -376,8 +422,8 @@ pre code {
 .accordion summary::after {
   content: "";
   margin-left: auto;
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
   border-right: 2px solid var(--text-muted);
   border-bottom: 2px solid var(--text-muted);
   transform: rotate(45deg);
@@ -388,54 +434,106 @@ pre code {
 .accordion[open] summary::after { transform: rotate(-135deg); }
 
 .summary-number {
-  width: 28px;
-  height: 28px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   background: var(--bg-muted);
   color: var(--text);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   flex-shrink: 0;
   transition: background 0.15s, color 0.15s;
 }
 
 .summary-icon {
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background: var(--bg-muted);
   color: var(--text-muted);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   flex-shrink: 0;
 }
 
-.summary-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.summary-title { font-size: 15px; font-weight: 600; }
-.summary-subtitle { font-size: 13px; color: var(--text-muted); }
+.summary-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.summary-title { font-size: 17px; font-weight: 600; line-height: 1.35; letter-spacing: -0.01em; }
+.summary-subtitle { font-size: 14px; color: var(--text-muted); line-height: 1.45; }
 
 .accordion-body {
-  padding: 4px 20px 22px;
+  padding: 8px 24px 26px;
   border-top: 1px solid var(--border);
   margin-top: -1px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: #2a3352;
 }
 
 .accordion-body h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 20px 0 8px;
+  color: var(--text);
+  letter-spacing: -0.005em;
+}
+
+.accordion-body p { margin: 10px 0; }
+.accordion-body ul, .accordion-body ol { padding-left: 24px; margin: 10px 0; }
+.accordion-body li { margin: 6px 0; }
+.accordion-body strong { color: var(--text); }
+
+/* Inline notes (callouts inside step bodies) */
+.note {
+  background: var(--accent-soft);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  margin: 14px 0;
+  font-size: 14px;
+  color: var(--text);
+}
+.note--info {
+  background: #eef1fa;
+  border-left-color: var(--blue);
+}
+.note code { background: rgba(15, 26, 61, 0.06); }
+
+/* Body headings (smaller than h3 — used for sub-sections like "Method 1 —") */
+.accordion-body h4 {
   font-size: 14px;
   font-weight: 600;
-  margin: 18px 0 8px;
+  margin: 18px 0 6px;
   color: var(--text);
 }
 
-.accordion-body p { margin: 8px 0; }
-.accordion-body ul, .accordion-body ol { padding-left: 22px; margin: 8px 0; }
-.accordion-body li { margin: 4px 0; }
+/* Data table inside step bodies */
+.accordion-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 14px;
+}
+.accordion-body th,
+.accordion-body td {
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.accordion-body th {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-strong);
+}
+.accordion-body tr:last-child td { border-bottom: none; }
 
 .accordion--muted summary { background: var(--bg-muted); }
 
