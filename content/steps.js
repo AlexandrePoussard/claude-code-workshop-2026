@@ -166,22 +166,30 @@ window.WORKSHOP_STEPS = [
 
 <p>Choose one of the two feature options below.</p>
 
-<h4>Option A: Assign a Relationship Manager to Approved Applicants</h4>
-<p>Build a new tab that lets reviewers assign an investor <em>Relationship Manager</em> (RM) to an applicant once their KYC application has been approved and their account created.</p>
+<h4>Option A: Add a "Send Welcome Email" Step to the Workflow</h4>
+<p>Extend the onboarding workflow with a new step that, once an applicant has been approved and their account created, composes and sends a welcome email to the applicant — including a friendly greeting, confirmation that their account is live, and the details of the investor Relationship Manager who has been assigned to them.</p>
 
 <p>Paste this prompt:</p>
-<pre><code>Build a new "Relationship Manager" tab in the KYC reviewer console. It should have:
-1. A list of approved applicants whose account has been created but who do not yet have an RM assigned
-2. For each applicant, a dropdown of available Relationship Managers (with name, desk, and current book size)
-3. An "Assign RM" button that records the assignment and moves the applicant out of the unassigned list
-4. An "Assigned" section showing applicants who already have an RM, the RM's name, and the assignment date
-5. Respect the existing application status (only "Approved" + "Account created" applicants are eligible)
+<pre><code>Add a new "Send welcome email" step to the KYC onboarding workflow, triggered after an application is Approved and the account has been created. It should:
+
+1. Appear as a new action in the applicant profile (e.g., a "Send welcome email" button) and as a new column/state in the workflow so reviewers can see which approved applicants still need to be emailed
+2. Auto-assign an investor Relationship Manager (RM) if one isn't already set, picking from a mock list of RMs (name, email, desk/region)
+3. Open a preview modal showing the email content and layout before sending, with editable subject and body. Suggested template:
+   - Subject: "Welcome to <Company>, <First name> — your account is ready"
+   - Greeting: personalized ("Dear <First name>,")
+   - Confirmation that KYC is approved and the account is active
+   - A short "What's next" section
+   - Introduction of the assigned Relationship Manager (name, email, a 1-line bio or region) as the applicant's point of contact
+   - Polite sign-off from the onboarding team
+4. Use a clean, professional HTML email layout (header with logo placeholder, readable body, button-styled call-to-action, footer with legal line) — inline CSS so it renders in common email clients
+5. On send, record the email in the applicant's profile (timestamp, RM assigned, subject) and move the applicant into an "Onboarded" state in the workflow
+6. Mock the actual send — just log the payload to the backend and show a success toast on the frontend
 
 Use the AskUserQuestion tool!</code></pre>
 
 <p>Claude will present a plan. Review it — when it looks good, accept the plan and let Claude implement it.</p>
 
-<div class="note note--info">Claude may ask you clarifying questions using the AskUserQuestion tool (e.g., "Should the RM list be seeded from mock data or a new endpoint?"). Answer these as they come up.</div>
+<div class="note note--info">Claude may ask you clarifying questions using the AskUserQuestion tool (e.g., "Should the RM pool be seeded from mock data or a new endpoint?" or "Plain-text fallback for the email, yes or no?"). Answer these as they come up.</div>
 
 <p>Test the feature in your browser once Claude finishes. You may notice things aren't perfect!</p>
 <p>Then iterate: choose what you'd like to work on next.</p>
@@ -232,7 +240,7 @@ Use the AskUserQuestion tool!</code></pre>
 <p>This summarizes the conversation so far and clears older context, freeing up space for new work. Claude retains the key information.</p>
 
 <p>You can also pass an instruction to <code>/compact</code> to tell Claude what to prioritize when summarizing:</p>
-<pre><code>/compact keep the details of the Relationship Manager assignment feature</code></pre>
+<pre><code>/compact keep the details of the welcome-email workflow step feature</code></pre>
 <p>This ensures important context (like a feature you're actively building) survives the compaction.</p>`,
   },
   {
