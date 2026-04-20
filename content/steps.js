@@ -154,35 +154,168 @@ window.WORKSHOP_STEPS = [
     id: "build-feature",
     number: 6,
     title: "Build a Feature",
-    subtitle: "Ship something new end-to-end with Claude.",
-    bodyHTML: `<p><em>Content coming soon.</em></p>`,
+    subtitle: "What you'll learn: Plan Mode, iterative development, interactive feedback.",
+    bodyHTML: `<p>This is the core of the workshop. You'll use <strong>Plan Mode</strong> to have Claude design a feature before implementing it, then iterate on the result.</p>
+
+<h4>Enter Plan Mode</h4>
+<p>Plan Mode lets Claude propose a plan and wait for your approval before writing any code.</p>
+<ul>
+  <li><strong>Desktop app:</strong> click the <strong>Plan</strong> toggle at the bottom of the chat input (next to the model picker) so it turns on.</li>
+  <li><strong>Terminal:</strong> press <kbd>Shift</kbd>+<kbd>Tab</kbd> to switch Claude into Plan Mode.</li>
+</ul>
+
+<p>Choose one of the two feature options below.</p>
+
+<h4>Option A: Assign a Relationship Manager to Approved Applicants</h4>
+<p>Build a new tab that lets reviewers assign an investor <em>Relationship Manager</em> (RM) to an applicant once their KYC application has been approved and their account created.</p>
+
+<p>Paste this prompt:</p>
+<pre><code>Build a new "Relationship Manager" tab in the KYC reviewer console. It should have:
+1. A list of approved applicants whose account has been created but who do not yet have an RM assigned
+2. For each applicant, a dropdown of available Relationship Managers (with name, desk, and current book size)
+3. An "Assign RM" button that records the assignment and moves the applicant out of the unassigned list
+4. An "Assigned" section showing applicants who already have an RM, the RM's name, and the assignment date
+5. Respect the existing application status (only "Approved" + "Account created" applicants are eligible)
+
+Use the AskUserQuestion tool!</code></pre>
+
+<p>Claude will present a plan. Review it — when it looks good, accept the plan and let Claude implement it.</p>
+
+<div class="note note--info">Claude may ask you clarifying questions using the AskUserQuestion tool (e.g., "Should the RM list be seeded from mock data or a new endpoint?"). Answer these as they come up.</div>
+
+<p>Test the feature in your browser once Claude finishes. You may notice things aren't perfect!</p>
+<p>Then iterate: choose what you'd like to work on next.</p>
+
+<div class="note"><strong>Pro Tip:</strong> Claude is an intelligent thought partner
+<ul>
+  <li>Can help plan, discover, ideate and design across the SDLC</li>
+  <li>Can help identify biases, identify gaps and support critical thinking</li>
+  <li>Can review, document, architect and draft visual diagrams</li>
+  <li>Can check screenshots by pasting them into the conversation (Ctrl+V / Cmd+V)</li>
+</ul>
+</div>
+
+<h4>Option B: SaaS-Style UI Redesign</h4>
+<p>Transform the KYC app's interface from the basic layout into a polished, modern SaaS-style design using a reusable Claude Code skill.</p>
+
+<h4>Part 1 — Create the skill</h4>
+<pre><code>I want to build a skill that redesigns a Vue 3 application's UI into a modern SaaS-style interface with a vertical navigation sidebar on the left instead of a top nav bar, consistent spacing, and a polished professional look.</code></pre>
+<p>Claude will ask follow-up questions to build the skill. Answer them to shape the skill's behavior.</p>
+
+<h4>Part 2 — Apply the skill</h4>
+<pre><code>Use the frontend-design skill to redesign this KYC reviewer console into a modern SaaS-style interface with:
+1. Vertical navigation bar on the left side instead of the top
+2. Clean, modern card layouts for the KPI tiles and applications table
+3. Professional SaaS aesthetic suitable for a financial-compliance product
+
+Use the AskUserQuestion tool!</code></pre>
+<p>Claude presents a plan. Accept it and let the implementation run.</p>
+
+<p>Then iterate:</p>
+<pre><code>Add a collapsible sidebar with icons-only mode for smaller screens.</code></pre>
+
+<div class="note">When Claude's plan looks good, accept it and wait for the implementation to complete. Then test the changes in your browser at <a href="http://localhost:3000" target="_blank" rel="noopener">http://localhost:3000</a>.</div>`,
   },
   {
     id: "context-management",
     number: 7,
     title: "Context Management",
-    subtitle: "Keep Claude focused with compaction, /clear, and scoping.",
-    bodyHTML: `<p><em>Content coming soon.</em></p>`,
+    subtitle: "What you'll learn: Managing the context window during long sessions.",
+    bodyHTML: `<p>After building a feature, your context window may be filling up. Claude Code provides tools to manage this.</p>
+
+<p><strong>Check context usage:</strong></p>
+<pre><code>/context</code></pre>
+<p>This shows a breakdown of how much context is being used by your conversation, files, and tools.</p>
+
+<p><strong>Compact the context:</strong></p>
+<pre><code>/compact</code></pre>
+<p>This summarizes the conversation so far and clears older context, freeing up space for new work. Claude retains the key information.</p>
+
+<p>You can also pass an instruction to <code>/compact</code> to tell Claude what to prioritize when summarizing:</p>
+<pre><code>/compact keep the details of the Relationship Manager assignment feature</code></pre>
+<p>This ensures important context (like a feature you're actively building) survives the compaction.</p>`,
   },
   {
     id: "add-playwright",
     number: 8,
     title: "Add Playwright MCP",
-    subtitle: "Install and configure the Playwright MCP server.",
-    bodyHTML: `<p><em>Content coming soon.</em></p>`,
+    subtitle: "What you'll learn: MCP (Model Context Protocol), installing MCP servers.",
+    bodyHTML: `<p>MCP servers give Claude the ability to connect to external tools — things like browser automation, database access, or API integrations. Think of them as a connector protocol that extends what Claude can do beyond operating within the confines of your local machine. (<a href="https://docs.anthropic.com/en/docs/claude-code/mcp" target="_blank" rel="noopener">Learn more about MCP</a>)</p>
+
+<h4>Option A — Desktop Application</h4>
+<ol>
+  <li>Open <strong>Settings</strong> (gear icon, or <kbd>Cmd</kbd>+<kbd>,</kbd> / <kbd>Ctrl</kbd>+<kbd>,</kbd>) and go to the <strong>Connectors</strong> (MCP) section.</li>
+  <li>Click <strong>Add MCP server</strong>, pick the <em>Command</em> type, and fill in:
+    <ul>
+      <li><strong>Name:</strong> <code>playwright</code></li>
+      <li><strong>Command:</strong> <code>npx</code></li>
+      <li><strong>Arguments:</strong> <code>@playwright/mcp@latest</code></li>
+    </ul>
+  </li>
+  <li>Save and enable the connector. Claude Code will start the Playwright MCP server on demand.</li>
+</ol>
+
+<h4>Option B — Terminal</h4>
+<p>Enter Bash mode by pressing <kbd>!</kbd>, then run:</p>
+<pre><code>! claude mcp add playwright npx @playwright/mcp@latest</code></pre>
+
+<p>This installs the Playwright MCP server, which gives Claude the ability to control a browser.</p>
+
+<div class="note note--info">Verify the install with <code>/mcp</code> (terminal) or by reopening the Connectors panel (desktop) — you should see <code>playwright</code> listed as connected.</div>`,
   },
   {
     id: "use-playwright",
     number: 9,
     title: "Use Playwright MCP to Test",
-    subtitle: "Drive the browser from Claude to validate your feature.",
-    bodyHTML: `<p><em>Content coming soon.</em></p>`,
+    subtitle: "What you'll learn: Context budget awareness, browser testing via MCP.",
+    bodyHTML: `<p>Restart Claude Code to pick up the MCP configuration.</p>
+
+<h4>Option A — Desktop Application</h4>
+<p>Quit and relaunch the Claude Code desktop app, then reopen your project folder. The Playwright connector should show as active in the Connectors panel.</p>
+
+<h4>Option B — Terminal</h4>
+<pre><code>/exit
+claude</code></pre>
+
+<h4>Check the context impact</h4>
+<p>In the terminal run <code>/context</code> (or use the context-usage indicator in the desktop app):</p>
+<pre><code>/context</code></pre>
+<p>Notice how MCP servers consume some context budget for their tool definitions. This is a useful thing to be aware of when working with multiple MCP servers.</p>
+
+<div class="note note--info">This repo already has Playwright configured in <code>.mcp.json</code>, but we teach the install process here so you know how to add MCP servers to your own projects.</div>
+
+<h4>Verify the MCP server is loaded</h4>
+<p><strong>Terminal:</strong></p>
+<pre><code>/mcp</code></pre>
+<p>You should see <code>playwright</code> listed.</p>
+<p><strong>Desktop app:</strong> open <strong>Settings → Connectors</strong> and confirm <code>playwright</code> is enabled and connected.</p>
+
+<h4>Drive the browser</h4>
+<p>Now use Playwright to test the app by pasting this into Claude Code:</p>
+<pre><code>Use Playwright MCP to test the KYC app:
+1. Start the development servers
+2. Navigate to http://localhost:3000
+3. Take a screenshot of the Reviewer dashboard
+4. Click through the main navigation tabs (Reviewer dashboard, Analytics, New application, Audit log) and verify each page loads
+5. Open one applicant profile from the applications table and confirm the details panel renders</code></pre>
+
+<p>Claude will launch a browser, navigate through the app, take screenshots, and report what it finds. If anything looks wrong, keep iterating.</p>
+
+<div class="note"><strong>Pro Tip:</strong> Claude is an amazing teacher and can help troubleshoot most technical roadblocks
+<ul>
+  <li>Install, manage and handle package dependencies</li>
+  <li>Troubleshoot errors and debug applications</li>
+  <li>Run bash commands &amp; git for source control and integrate with your CI/CD</li>
+</ul>
+</div>
+
+<p>Then iterate: choose what you'd like to work on next.</p>`,
   },
-  {
-    id: "wrap-up",
-    number: 10,
-    title: "Wrap Up",
-    subtitle: "Reflect, share feedback, and next steps.",
-    bodyHTML: `<p><em>Content coming soon.</em></p>`,
-  },
+  // {
+  //   id: "wrap-up",
+  //   number: 10,
+  //   title: "Wrap Up",
+  //   subtitle: "Reflect, share feedback, and next steps.",
+  //   bodyHTML: `<p><em>Content coming soon.</em></p>`,
+  // },
 ];
