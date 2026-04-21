@@ -21,7 +21,10 @@ window.WORKSHOP_STEPS = [
     bodyHTML: `<p>Grab a local copy of the KYC demo app so you can work on it. If you don't have a GitHub account, use Option 1. If you do, prefer Option 2 so you can push your changes.</p>
 
 <p><strong>Option 1 — Download ZIP (recommended, no GitHub account needed)</strong></p>
-<p><a href="https://github.com/AlexandrePoussard/claude-code-kyc-app/archive/refs/heads/main.zip">Download the ZIP</a>, move it to your desired location, and unzip it. Then open a terminal and <code>cd</code> into the directory.</p>
+<p><a href="https://github.com/AlexandrePoussard/claude-code-kyc-app/archive/refs/heads/main.zip">Download the ZIP</a>, move it to your desired location, and unzip it.</p>
+
+<p><strong>(Optional)</strong> Open a terminal, <code>cd</code> into the directory, and initialize it as a git repo so Claude Code can use its git integration (diffs, worktrees, etc.):</p>
+<pre><code>git init && git add -A && git commit -m "Initial commit"</code></pre>
 
 <p><strong>Option 2 — Fork + Git (if you have a GitHub account)</strong></p>
 <ol>
