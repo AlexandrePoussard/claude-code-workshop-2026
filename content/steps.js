@@ -253,15 +253,22 @@ Use the AskUserQuestion tool!</code></pre>
 
 <h4>Option A — Desktop Application</h4>
 <ol>
-  <li>Open <strong>Settings</strong> (gear icon, or <kbd>Cmd</kbd>+<kbd>,</kbd> / <kbd>Ctrl</kbd>+<kbd>,</kbd>) and go to the <strong>Connectors</strong> (MCP) section.</li>
-  <li>Click <strong>Add MCP server</strong>, pick the <em>Command</em> type, and fill in:
-    <ul>
-      <li><strong>Name:</strong> <code>playwright</code></li>
-      <li><strong>Command:</strong> <code>npx</code></li>
-      <li><strong>Arguments:</strong> <code>@playwright/mcp@latest</code></li>
-    </ul>
+  <li>Open <strong>Settings</strong> (gear icon, or <kbd>Cmd</kbd>+<kbd>,</kbd> / <kbd>Ctrl</kbd>+<kbd>,</kbd>) and go to the <strong>Developer</strong> section.</li>
+  <li>Click <strong>Edit Config</strong>. This opens the folder containing <code>claude_desktop_config.json</code>. Open the file in a text editor and paste in:
+    <pre><code>{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
+    }
+  }
+}</code></pre>
+    <p>If the file already has content, merge the <code>playwright</code> entry into the existing <code>mcpServers</code> block.</p>
   </li>
-  <li>Save and enable the connector. Claude Code will start the Playwright MCP server on demand.</li>
+  <li>Save the file, then <strong>quit and relaunch</strong> Claude Desktop (just closing the window isn't enough — fully quit the app).</li>
+  <li>Reopen <strong>Settings → Developer</strong>. You should see <code>playwright</code> listed under <strong>Local MCP servers</strong> with a <span style="color:green"><strong>running</strong></span> status badge:
+    <br><br><img src="content/developer_settings_mcp.png" alt="Developer settings showing Playwright MCP server running" style="max-width:100%;border:1px solid #ddd;border-radius:8px;">
+  </li>
 </ol>
 
 <h4>Option B — Terminal</h4>
@@ -270,7 +277,7 @@ Use the AskUserQuestion tool!</code></pre>
 
 <p>This installs the Playwright MCP server, which gives Claude the ability to control a browser.</p>
 
-<div class="note note--info">Verify the install with <code>/mcp</code> (terminal) or by reopening the Connectors panel (desktop) — you should see <code>playwright</code> listed as connected.</div>`,
+<div class="note note--info">Verify the install with <code>/mcp</code> (terminal) or by checking <strong>Settings → Developer</strong> (desktop) — you should see <code>playwright</code> listed and running.</div>`,
   },
   {
     id: "use-playwright",
@@ -280,7 +287,7 @@ Use the AskUserQuestion tool!</code></pre>
     bodyHTML: `<p>Restart Claude Code to pick up the MCP configuration.</p>
 
 <h4>Option A — Desktop Application</h4>
-<p>Quit and relaunch the Claude Code desktop app, then reopen your project folder. The Playwright connector should show as active in the Connectors panel.</p>
+<p>If you haven't already, quit and fully relaunch the Claude Code desktop app, then reopen your project folder.</p>
 
 <h4>Option B — Terminal</h4>
 <pre><code>/exit
@@ -289,8 +296,17 @@ claude</code></pre>
 <h4>Check the context impact</h4>
 <p>In the terminal run <code>/context</code> (or use the context-usage indicator in the desktop app):</p>
 <pre><code>/context</code></pre>
-<p>Notice how MCP servers consume some context budget for their tool definitions. This adds up fast — a handful of connected servers can easily burn 50K+ tokens (25% of Claude's context window!) before the conversation starts.</p>
-<p><strong>The good news:</strong> Claude now loads tool definitions on-demand via the <a href="https://www.anthropic.com/engineering/advanced-tool-use">Tool Search Tool</a>, so you get access to your full tool library while only paying the token cost for what's actually used. It's still worth a glance at <code>/context</code> when Claude feels sluggish or distracted, but it's much less of a problem than it used to be.</p>
+
+<p>Here's what the context breakdown looks like with Playwright MCP connected:</p>
+<img src="content/context_usage_mcp.png" alt="Context window breakdown showing MCP tools usage" style="max-width:100%;border:1px solid #ddd;border-radius:8px;">
+
+<p>Notice the two separate MCP entries in the breakdown:</p>
+<ul>
+  <li><strong>MCP tools — 1.2k (0.6%)</strong>: tool definitions currently loaded into the active context</li>
+  <li><strong>MCP tools (deferred) — 21.1k (10.5%)</strong>: tool definitions registered but <em>not</em> loaded yet — these are loaded lazily on demand</li>
+</ul>
+<p>Claude uses the <a href="https://www.anthropic.com/engineering/advanced-tool-use">Tool Search Tool</a> to load tool definitions on-demand rather than packing them all into the context upfront. In this screenshot, Playwright exposes <strong>62 tools totalling 22.4k tokens</strong>, but only 1.2k is actually in the active context — the rest stays deferred until Claude needs a specific tool. This means you can connect multiple MCP servers without blowing your context budget.</p>
+<p>It's still worth a glance at <code>/context</code> when Claude feels sluggish or distracted, but lazy loading makes this much less of a problem than it used to be.</p>
 
 <div class="note note--info">This repo already has Playwright configured in <code>.mcp.json</code>, but we teach the install process here so you know how to add MCP servers to your own projects.</div>
 
@@ -298,7 +314,7 @@ claude</code></pre>
 <p><strong>Terminal:</strong></p>
 <pre><code>/mcp</code></pre>
 <p>You should see <code>playwright</code> listed.</p>
-<p><strong>Desktop app:</strong> open <strong>Settings → Connectors</strong> and confirm <code>playwright</code> is enabled and connected.</p>
+<p><strong>Desktop app:</strong> open <strong>Settings → Developer</strong> and confirm <code>playwright</code> is listed under <strong>Local MCP servers</strong> with a <span style="color:green"><strong>running</strong></span> status.</p>
 
 <h4>Drive the browser</h4>
 <p>Now use Playwright to test the app by pasting this into Claude Code:</p>
