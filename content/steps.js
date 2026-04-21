@@ -162,7 +162,7 @@ window.WORKSHOP_STEPS = [
 <p>Plan Mode lets Claude propose a plan and wait for your approval before writing any code.</p>
 <ul>
   <li><strong>Desktop app:</strong> click the <strong>Plan</strong> toggle at the bottom of the chat input (next to the model picker) so it turns on.</li>
-  <li><strong>Terminal:</strong> press <kbd>Shift</kbd>+<kbd>Tab</kbd> to switch Claude into Plan Mode.</li>
+  <li><strong>Terminal:</strong> press <kbd>Shift</kbd>+<kbd>Tab</kbd> to cycle through modes until you see <strong>Plan Mode</strong> in the prompt indicator.</li>
 </ul>
 
 <p>Choose one of the two feature options below.</p>
@@ -272,12 +272,12 @@ Use the AskUserQuestion tool!</code></pre>
 </ol>
 
 <h4>Option B — Terminal</h4>
-<p>Enter Bash mode by pressing <kbd>!</kbd>, then run:</p>
-<pre><code>! claude mcp add playwright npx @playwright/mcp@latest</code></pre>
+<p>Paste the following into Claude Code (the <code>!</code> prefix runs it as a shell command):</p>
+<pre><code>! claude mcp add --scope project playwright npx @playwright/mcp@latest</code></pre>
 
-<p>This installs the Playwright MCP server, which gives Claude the ability to control a browser.</p>
+<p>This adds the Playwright MCP server to the project's <code>.mcp.json</code>, so anyone who clones the repo gets it automatically. It gives Claude the ability to control a browser.</p>
 
-<div class="note note--info">Verify the install with <code>/mcp</code> (terminal) or by checking <strong>Settings → Developer</strong> (desktop) — you should see <code>playwright</code> listed and running.</div>`,
+<div class="note note--info">Since this repo already ships with <code>.mcp.json</code> configured, terminal users can skip this step — just restart Claude Code and verify with <code>/mcp</code>. Desktop app users still need to add it via <strong>Settings → Developer → Edit Config</strong> as shown above.</div>`,
   },
   {
     id: "use-playwright",
@@ -308,7 +308,7 @@ claude</code></pre>
 <p>Claude uses the <a href="https://www.anthropic.com/engineering/advanced-tool-use">Tool Search Tool</a> to load tool definitions on-demand rather than packing them all into the context upfront. In this screenshot, Playwright exposes <strong>62 tools totalling 22.4k tokens</strong>, but only 1.2k is actually in the active context — the rest stays deferred until Claude needs a specific tool. This means you can connect multiple MCP servers without blowing your context budget.</p>
 <p>It's still worth a glance at <code>/context</code> when Claude feels sluggish or distracted, but lazy loading makes this much less of a problem than it used to be.</p>
 
-<div class="note note--info">This repo already has Playwright configured in <code>.mcp.json</code>, but we teach the install process here so you know how to add MCP servers to your own projects.</div>
+<div class="note note--info">This repo already ships with Playwright configured in <code>.mcp.json</code> (added via <code>claude mcp add --scope project</code>), so Claude Code in the terminal will pick it up automatically. We teach the install process here so you know how to add MCP servers to your own projects — and so desktop app users can set it up in their local config.</div>
 
 <h4>Verify the MCP server is loaded</h4>
 <p><strong>Terminal:</strong></p>
