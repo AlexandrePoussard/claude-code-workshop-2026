@@ -305,7 +305,7 @@ claude</code></pre>
   <li><strong>MCP tools — 1.2k (0.6%)</strong>: tool definitions currently loaded into the active context</li>
   <li><strong>MCP tools (deferred) — 21.1k (10.5%)</strong>: tool definitions registered but <em>not</em> loaded yet — these are loaded lazily on demand</li>
 </ul>
-<p>Claude uses the <a href="https://www.anthropic.com/engineering/advanced-tool-use">Tool Search Tool</a> to load tool definitions on-demand rather than packing them all into the context upfront. In this screenshot, Playwright exposes <strong>62 tools totalling 22.4k tokens</strong>, but only 1.2k is actually in the active context — the rest stays deferred until Claude needs a specific tool. This means you can connect multiple MCP servers without blowing your context budget.</p>
+<p>Claude uses the <a href="https://www.anthropic.com/engineering/advanced-tool-use">Tool Search Tool</a> to load tool definitions on-demand rather than packing them all into the context upfront. In this screenshot, Playwright's tools and others comprising ~20k tokens are deferred — loaded only when Claude actually needs them. This means you can connect multiple MCP servers without blowing your context budget.</p>
 <p>It's still worth a glance at <code>/context</code> when Claude feels sluggish or distracted, but lazy loading makes this much less of a problem than it used to be.</p>
 
 <div class="note note--info">This repo already ships with Playwright configured in <code>.mcp.json</code> (added via <code>claude mcp add --scope project</code>), so Claude Code in the terminal will pick it up automatically. We teach the install process here so you know how to add MCP servers to your own projects — and so desktop app users can set it up in their local config.</div>
