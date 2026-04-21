@@ -21,7 +21,7 @@ window.WORKSHOP_STEPS = [
     bodyHTML: `<p>Grab a local copy of the KYC demo app so you can work on it. If you don't have a GitHub account, use Option 1. If you do, prefer Option 2 so you can push your changes.</p>
 
 <p><strong>Option 1 — Download ZIP (recommended, no GitHub account needed)</strong></p>
-<p><a href="https://github.com/AlexandrePoussard/claude-code-kyc-app/archive/refs/heads/main.zip">Download the ZIP</a>, unzip it, and <code>cd</code> into the directory.</p>
+<p><a href="https://github.com/AlexandrePoussard/claude-code-kyc-app/archive/refs/heads/main.zip">Download the ZIP</a>, move it to your desired location, and unzip it. Then open a terminal and <code>cd</code> into the directory.</p>
 
 <p><strong>Option 2 — Fork + Git (if you have a GitHub account)</strong></p>
 <ol>
@@ -41,7 +41,7 @@ window.WORKSHOP_STEPS = [
     subtitle: "What you'll learn: Starting Claude Code, selecting a model.",
     bodyHTML: `<p><strong>Option A — Desktop Application (recommended)</strong></p>
 <ol>
-  <li>Open the <strong>Claude Code</strong> desktop app.</li>
+  <li>Open the <strong>Claude</strong> desktop app, navigate to the <strong>Code</strong> tab, and create a new local session.</li>
   <li>Click <strong>Open folder</strong> (or drag the project folder onto the app) and select the directory you just downloaded or cloned.</li>
   <li>Once the project is loaded, select your preferred model from the model picker at the bottom of the window.</li>
 </ol>
@@ -60,7 +60,7 @@ window.WORKSHOP_STEPS = [
     title: "Run the KYC App Locally",
     subtitle: "What you'll learn: Using Claude Code to install dependencies and start dev servers.",
     bodyHTML: `<p>Paste the following prompt into Claude Code:</p>
-<pre><code>Install dependencies and start the development servers and open up the frontend and backend in my respective browser windows.</code></pre>
+<pre><code>Install dependencies and start the development servers and open up the frontend and backend in their respective browser windows.</code></pre>
 
 <p>Claude will:</p>
 <ul>
@@ -83,6 +83,8 @@ window.WORKSHOP_STEPS = [
 </ul>
 
 <p>Inside the applications table you can filter by status or risk, search applicants, and open a row to see the full profile (identity fields, liveness check, sanctions results, decision history).</p>
+
+<p><strong>Note:</strong> For the more technical among you, you can follow the directions in the README to run the app manually from the terminal and explore the codebase in your editor.</p>
 `,
   },
   {
@@ -97,40 +99,39 @@ window.WORKSHOP_STEPS = [
 <h4>Using @-file mentions</h4>
 <p>You can reference any file in your prompts using <code>@</code>. Try it:</p>
 <pre><code>Print out exactly what is in @CLAUDE.md</code></pre>
-<p>Claude reads the file and prints its contents. The <code>@</code> syntax works for any file in your project.</p>
+<p>Claude reads the file and prints its contents. The <code>@</code> syntax works for any file in your project - including images!</p>
 
-<h4>Three ways to edit the CLAUDE.md file</h4>
+<h4>Two ways to edit the CLAUDE.md file</h4>
 
-<h4>Method 1 — Use <code>#</code> Memory Mode (recommended)</h4>
-<p>Press <code>#</code> at the prompt to enter Memory Mode. This lets you write directly to CLAUDE.md without consuming any tokens — Claude doesn't need to process the request.</p>
-<pre><code># Always document non-obvious logic changes with comments</code></pre>
-
-<h4>Method 2 — Edit directly in your editor</h4>
-<p>Open <code>CLAUDE.md</code> in your text editor (VSCode, vim, etc.) and make changes. Also zero token cost.</p>
-
-<h4>Method 3 — Prompt Claude to edit it</h4>
+<h5>Method 1 — Prompt Claude to edit it</h5>
 <pre><code>Edit my CLAUDE.md file to add "Always document non-obvious logic changes with comments"</code></pre>
 <p>Claude opens the file, adds the instruction, and saves it.</p>
 
-<div class="note note--info">Methods 1 and 2 are free — no tokens consumed. Method 3 uses tokens since Claude processes the request and makes the edit. Use Method 3 when you want Claude to decide how to organize or word the instruction.</div>
+<h5>Method 2 — Edit directly in your editor</h5>
+<p>Open <code>CLAUDE.md</code> in your text editor (VSCode, vim, etc.) and make changes. This lets you make changes yourself without consuming tokens.</p>
+
+<div class="note note--info">Method 1 consumes tokens since Claude processes the request and makes the edit, while Method 2 is "free" as Claude is not involved. Use Method 1 when you want Claude to decide how to organize or word the instruction.</div>
 
 <h4>Persistent memory systems</h4>
-<p>Claude has 2 persistent memory systems but ultimately the record ends up in the same place — the <code>./.claude/CLAUDE.md</code> (personal):</p>
+<p>Claude Code has two complementary memory systems, both loaded at the start of every session. You write CLAUDE.md to guide Claude's behavior, and Claude writes auto memory to learn from your corrections without manual effort.</p>
 
-<p><code>/CLAUDE.md</code> markdown files with persistent instructions that load automatically:</p>
+<p><strong>CLAUDE.md files</strong> are markdown with persistent instructions. They live in several locations, each with a different scope:</p>
 <table>
   <thead>
     <tr><th>File</th><th>Scope</th></tr>
   </thead>
   <tbody>
-    <tr><td><code>./CLAUDE.md</code></td><td>Project (shared via git)</td></tr>
-    <tr><td><code>./.claude/rules/*.md</code></td><td>Topic-specific rules</td></tr>
-    <tr><td><code>./.claude/CLAUDE.md</code></td><td>Personal, all projects</td></tr>
-    <tr><td><code>./CLAUDE.local.md</code></td><td>Personal, this project only</td></tr>
+    <tr><td><code>./CLAUDE.md</code> or <code>./.claude/CLAUDE.md</code></td><td>Project (shared via git)</td></tr>
+    <tr><td><code>./.claude/rules/*.md</code></td><td>Project, topic-specific (optionally path-scoped)</td></tr>
+    <tr><td><code>~/.claude/CLAUDE.md</code></td><td>Personal, all projects</td></tr>
+    <tr><td><code>./CLAUDE.local.md</code></td><td>Personal, this project only (gitignore it)</td></tr>
   </tbody>
 </table>
 
-<p><code>/memory</code> command which writes to your personal <code>./.claude/CLAUDE.md</code> and is faster for capturing preferences on the fly.</p>`,
+<p><strong>Auto memory</strong> is Claude's own notebook, stored in <code>~/.claude/projects/&lt;project&gt;/memory/</code>. Claude decides what's worth remembering — build commands, debugging insights, preferences — and writes them there as you work. It's machine-local and shared across all worktrees of the same repo.</p>
+
+<p>The <code>/memory</code> command lists all memory files loaded in the current session, lets you open them in your editor, and toggles auto memory on or off. When you ask Claude in chat to remember something (e.g. "always use pnpm"), it's saved to auto memory, not to a CLAUDE.md. To update CLAUDE.md, ask Claude explicitly ("add this to CLAUDE.md") or edit the file yourself.</p>
+<p><strong>Note:</strong> The <code>/memory</code> command may not be available in the desktop app.</p>`,
   },
   {
     id: "explore-codebase",
@@ -167,19 +168,19 @@ window.WORKSHOP_STEPS = [
 <p>Choose one of the two feature options below.</p>
 
 <h4>Option A: Add a "Send Welcome Email" Step to the Workflow</h4>
-<p>Extend the onboarding workflow with a new step that, once an applicant has been approved and their account created, composes and sends a welcome email to the applicant — including a friendly greeting, confirmation that their account is live, and the details of the investor Relationship Manager who has been assigned to them.</p>
+<p>Extend the onboarding workflow with a new step that, once an applicant has been approved and their account created, composes and sends a welcome email to the applicant — including a friendly greeting, confirmation that their account is live, and the details of the Investor Relationship Manager who has been assigned to them.</p>
 
 <p>Paste this prompt:</p>
 <pre><code>Add a new "Send welcome email" step to the KYC onboarding workflow, triggered after an application is Approved and the account has been created. It should:
 
 1. Appear as a new action in the applicant profile (e.g., a "Send welcome email" button) and as a new column/state in the workflow so reviewers can see which approved applicants still need to be emailed
-2. Auto-assign an investor Relationship Manager (RM) if one isn't already set, picking from a mock list of RMs (name, email, desk/region)
+2. Auto-assign an Investor Relationship Manager (RM) if one isn't already set, picking from a mock list of RMs (name, email, desk/region)
 3. Open a preview modal showing the email content and layout before sending, with editable subject and body. Suggested template:
-   - Subject: "Welcome to <Company>, <First name> — your account is ready"
-   - Greeting: personalized ("Dear <First name>,")
+   - Subject: "Welcome to &lt;Company&gt;, &lt;First name&gt; — your account is ready"
+   - Greeting: personalized ("Dear &lt;First name&gt;,")
    - Confirmation that KYC is approved and the account is active
    - A short "What's next" section
-   - Introduction of the assigned Relationship Manager (name, email, a 1-line bio or region) as the applicant's point of contact
+   - Introduction of the assigned Investor Relationship Manager (name, email, a 1-line bio or region) as the applicant's point of contact
    - Polite sign-off from the onboarding team
 4. Use a clean, professional HTML email layout (header with logo placeholder, readable body, button-styled call-to-action, footer with legal line) — inline CSS so it renders in common email clients
 5. On send, record the email in the applicant's profile (timestamp, RM assigned, subject) and move the applicant into an "Onboarded" state in the workflow
@@ -288,7 +289,8 @@ claude</code></pre>
 <h4>Check the context impact</h4>
 <p>In the terminal run <code>/context</code> (or use the context-usage indicator in the desktop app):</p>
 <pre><code>/context</code></pre>
-<p>Notice how MCP servers consume some context budget for their tool definitions. This is a useful thing to be aware of when working with multiple MCP servers.</p>
+<p>Notice how MCP servers consume some context budget for their tool definitions. This adds up fast — a handful of connected servers can easily burn 50K+ tokens (25% of Claude's context window!) before the conversation starts.</p>
+<p><strong>The good news:</strong> Claude now loads tool definitions on-demand via the <a href="https://www.anthropic.com/engineering/advanced-tool-use">Tool Search Tool</a>, so you get access to your full tool library while only paying the token cost for what's actually used. It's still worth a glance at <code>/context</code> when Claude feels sluggish or distracted, but it's much less of a problem than it used to be.</p>
 
 <div class="note note--info">This repo already has Playwright configured in <code>.mcp.json</code>, but we teach the install process here so you know how to add MCP servers to your own projects.</div>
 
