@@ -214,7 +214,7 @@ Use the AskUserQuestion tool!</code></pre>
 
 <h4>Part 1 — Create the skill</h4>
 <pre><code>I want to build a frontend-design skill that redesigns a Vue 3 application's UI into a modern SaaS-style interface with a vertical navigation sidebar on the left instead of a top nav bar, consistent spacing, and a polished professional look.</code></pre>
-<p>Claude will ask follow-up questions to build the skill. Answer them to shape the skill's behavior. The <a href="https://github.com/anthropics/skills/tree/main/skills/skill-creator">skill-creator flow</a> will then attempt to run auto-evaluations of your new skill — you can interrupt Claude and skip them for now to save time.</p>
+<p>Claude will ask follow-up questions to build the skill. Answer them to shape the skill's behavior. If Claude invokes the <a href="https://github.com/anthropics/skills/tree/main/skills/skill-creator">skill-creator</a> skill, it will then attempt to run auto-evaluations of your new skill — you can interrupt Claude and skip them for now to save time.</p>
 
 <h4>Part 2 — Apply the skill</h4>
 <p>You can invoke a skill in two ways: mention it naturally in your prompt (e.g. "Use the frontend-design skill to ...") or call it directly with <code>/frontend-design your prompt</code>. Try it below!</p>
