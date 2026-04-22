@@ -33,7 +33,7 @@ window.WORKSHOP_STEPS = [
     <pre><code>git clone git@github.com:YOUR_USERNAME/claude-code-kyc-app.git</code></pre>
   </li>
   <li>Enter the directory and create a working branch:
-    <pre><code>cd claude-code-kyc-app &amp;&amp; git checkout -b new_features</code></pre>
+    <pre><code>cd claude-code-kyc-app &amp;&amp; git checkout -b new-features</code></pre>
   </li>
 </ol>`,
   },
@@ -210,11 +210,14 @@ Use the AskUserQuestion tool!</code></pre>
 <h4>Option B: SaaS-Style UI Redesign</h4>
 <p>Transform the KYC app's interface from the basic layout into a polished, modern SaaS-style design using a reusable Claude Code skill.</p>
 
+<div class="note note--info">Anthropic provides an official <a href="https://github.com/anthropics/claude-code/blob/main/plugins/frontend-design/skills/frontend-design/SKILL.md"><strong>frontend-design</strong></a> skill — <em>"Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, or applications. Generates creative, polished code that avoids generic AI aesthetics."</em> (see <code>LICENSE.txt</code> for complete terms). In this workshop we walk through creating the skill from scratch for teaching purposes.</div>
+
 <h4>Part 1 — Create the skill</h4>
-<pre><code>I want to build a skill that redesigns a Vue 3 application's UI into a modern SaaS-style interface with a vertical navigation sidebar on the left instead of a top nav bar, consistent spacing, and a polished professional look.</code></pre>
-<p>Claude will ask follow-up questions to build the skill. Answer them to shape the skill's behavior.</p>
+<pre><code>I want to build a frontend-design skill that redesigns a Vue 3 application's UI into a modern SaaS-style interface with a vertical navigation sidebar on the left instead of a top nav bar, consistent spacing, and a polished professional look.</code></pre>
+<p>Claude will ask follow-up questions to build the skill. Answer them to shape the skill's behavior. The <a href="https://github.com/anthropics/skills/tree/main/skills/skill-creator">skill-creator flow</a> will then attempt to run auto-evaluations of your new skill — you can interrupt Claude and skip them for now to save time.</p>
 
 <h4>Part 2 — Apply the skill</h4>
+<p>You can invoke a skill in two ways: mention it naturally in your prompt (e.g. "Use the frontend-design skill to ...") or call it directly with <code>/frontend-design your prompt</code>. Try it below!</p>
 <pre><code>Use the frontend-design skill to redesign this KYC reviewer console into a modern SaaS-style interface with:
 1. Vertical navigation bar on the left side instead of the top
 2. Clean, modern card layouts for the KPI tiles and applications table
@@ -252,7 +255,7 @@ Use the AskUserQuestion tool!</code></pre>
     number: 8,
     title: "Add Playwright MCP",
     subtitle: "What you'll learn: MCP (Model Context Protocol), installing MCP servers.",
-    bodyHTML: `<p>MCP servers give Claude the ability to connect to external tools — things like browser automation, database access, or API integrations. Think of them as a connector protocol that extends what Claude can do beyond operating within the confines of your local machine. (<a href="https://docs.anthropic.com/en/docs/claude-code/mcp" target="_blank" rel="noopener">Learn more about MCP</a>)</p>
+    bodyHTML: `<p>MCP servers give Claude the ability to connect to external tools — things like browser automation, database access, or API integrations. Think of them as a connector protocol that extends what Claude can do beyond operating within the confines of your local machine. (<a href="https://code.claude.com/docs/en/mcp" target="_blank" rel="noopener">Learn more about MCP</a>)</p>
 
 <h4>Option A — Desktop Application</h4>
 <ol>
@@ -268,7 +271,7 @@ Use the AskUserQuestion tool!</code></pre>
 }</code></pre>
     <p>If the file already has content, merge the <code>playwright</code> entry into the existing <code>mcpServers</code> block.</p>
   </li>
-  <li>Save the file, then <strong>quit and relaunch</strong> Claude Desktop (just closing the window isn't enough — fully quit the app).</li>
+  <li>Save the file, then <strong>quit and relaunch</strong> the Claude desktop app (just closing the window isn't enough — fully quit the app).</li>
   <li>Reopen <strong>Settings → Developer</strong>. You should see <code>playwright</code> listed under <strong>Local MCP servers</strong> with a <span style="color:green"><strong>running</strong></span> status badge:
     <br><br><img src="content/developer_settings_mcp.png" alt="Developer settings showing Playwright MCP server running" style="max-width:100%;border:1px solid #ddd;border-radius:8px;">
   </li>
